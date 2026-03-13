@@ -1,0 +1,4 @@
+# robots.txt
+
+User-Agent:*
+Sitemap:https://raku-tabi.appspot.com/sitemap.xml

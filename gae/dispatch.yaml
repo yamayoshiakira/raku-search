@@ -1,0 +1,8 @@
+# raku-search dispatch.yaml
+
+dispatch:
+- url: "*/back/*"
+  service: backend
+
+- url: "*/*"
+  service: default

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ SITE_NAME }}</title>
+{% endblock %}
+
+{% block main %}
+<a href="/">Home</a> | 「{{ word }}」の検索結果 {{ items|length }}/{{ hits|intcomma }}件
+<hr>
+<form method="get" action="/search">
+<input type="search" name="q" value="{{ word }} ">
+</form>
+<hr>
+<ul class="articles">
+{% for item in items  %}
+<li><a class="expand" href="/item/{{ item.scode }}/{{ item.name|urlquote('') }}"></a>
+<h4><a href="#">{{ item.name }}</a></h4>
+<div class="flex">
+<img class="box1" src="{{ item.img }}">
+<div class="box2">
+<p>{{ item.caption[:200] }}</p>
+<span class="red">{{ item.price|intcomma }}円</span>
+{% if item.review > 0 %}<span class="blue">{{ item.rating }}</span> (<span  class="blue">{{ item.review|intcomma }}</span>） {% endif %}
+{{ item.shop }} / {{ item.supplier }}
+</div><!-- end box2 -->
+</div><!-- end flex -->
+</li>
+<hr>
+{% endfor %}
+</ul>
+{% endblock %}

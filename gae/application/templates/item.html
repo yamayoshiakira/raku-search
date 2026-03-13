@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ product.short_name }} - {{ SITE_NAME }}</title>
+<meta name="description" content="{{ product.description }}">
+{% endblock %}
+
+{% block header %}
+<header>
+  <h1 class="theme-b">{{ product.short_name }} - {{ SITE_NAME }}</h1>
+  <nav class="current">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li>{{ product.short_name }}</li>
+    </ul>
+  </nav>
+</header>
+{% endblock %}
+
+{% block main %}
+<div class="item">
+<img src="{{ product.img }}">
+<a href="{{ product.url }}" target="_blank"><h3>{{ product.name }}</h3></a>
+{% autoescape off %}
+{{ product.caption }}
+{% endautoescape %}
+<p>
+  <span style="color:red">{{ product.price|intcomma }}円</span>
+  <span style="color:blue">{{ product.rating }}({{ product.review|intcomma }})</span>
+  {{ product.shopname }} / Rakuten
+</p>
+</div><!-- /item -->
+<p class="buy"><a href="{{ product.url }}" target="_blank">この商品を 楽天市場 で買う</a></p>
+
+{% if product.keywords %}
+<ul class="keywords small">
+<li class="theme-b">関連ワード:</li>
+{% for keyword in product.keywords[:20] %}
+<li><a href="/word/{{ keyword.path|urlquote }}/">{{ keyword.word }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<p class="ad"><a href="{{ SITE_AD.url }}">{{ SITE_AD.name }}</a></p>
+{% endblock %}
+
+{% block footer %}
+<footer class="theme-b">{{ product.short_name }} - {{ SITE_NAME }}</footer>
+
+<!-- Rich result -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Product",
+  "name": "{{ product.short_name }}",
+  "description": "{{ product.description }}",
+  "image": "{{ product.img }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ product.price }}",
+    "priceCurrency": "JPY",
+    "seller": "{{ product.shopname }} / Rakuten"
+  }{% if product.review > 0 %},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product.rating }}",
+    "reviewCount": "{{ product.review }}"
+  }{% endif %}
+}
+</script>
+{% endblock %}

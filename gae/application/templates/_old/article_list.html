@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>List</title>
+{% endblock %}
+
+{% block body %}
+<a href="/">Home</a> | List
+{% if tags %}&gt; {{ tags.0 }}{% endif %}
+<hr>
+<ul class="articles">
+{% for article in articles  %}
+<li><a class="expand" href="/article/{{ article.key.id }}"></a>
+<h4><a href="/article/{{ article.key.id }}">{{ article.subject }}</a></h4>
+<div class="flex">
+{% if article.img %}<img class="box1" src="https://thumbnail.image.rakuten.co.jp/@0_mall/lccosme/cabinet/photo/product/86309_0c.jpg?_ex=100x100">{% endif %}
+<div class="box2">
+<p>{{ article.message_text[:100] }}</p>
+<span class="utc">{{ article.created }}</span>
+</div><!-- end box2 -->
+</div><!-- end flex -->
+</li>
+<hr>
+{% endfor %}
+</ul>
+{% if q_string %}<a class="more" href="/list{{ q_string }}">More..</a>{% endif %}
+<hr>
+{% endblock %}

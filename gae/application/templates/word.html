@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ word }} - {{ SITE_NAME }}</title>
+{% endblock %}
+
+{% block header %}
+<header>
+  <h1 class="theme-b">{{ word }} - {{ SITE_NAME }}</h1>
+  <nav class="current">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li>{{ word }}</li>
+    </ul>
+  </nav>
+  <form class="search-box" method="get" action="/search">
+  <input type="search" placeholder="Search" name="q" value="{{ word }} ">
+  </form>
+</header>
+{% endblock %}
+
+{% block main %}
+<ul class="items">
+  <li class="theme-b">「{{ word }}」の検索結果 {{ products|length }}/{{ hits|intcomma }}件</li>
+  {% for product in products  %}
+  <li>
+    <a class="expand" href="/item/{{ product.code }}/{{ product.short_name|urlquote('') }}/{{ product.description|urlquote('') }}/"></a>
+    <h4><a href="#">{{ product.short_name }}</a></h4>
+    <div class="flex">
+    <img class="box1" src="{{ product.img }}">
+    <div class="box2">
+    <p>{{ product.description }}</p>
+    <span style="color:red">{{ product.price|intcomma }}円</span>
+    <span style="color:blue">{{ product.rating }}({{ product.review|intcomma }})</span>
+    {{ product.shopname }} / Rakuten
+    </div><!-- end box2 -->
+    </div><!-- end flex -->
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+{% block footer %}
+<footer class="theme-b">{{ word }} - {{ SITE_NAME }}</footer>
+{% endblock %}

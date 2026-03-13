@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>List - {{ SITE_NAME }}</title>
+{% endblock %}
+
+{% block header %}
+<header>
+  <h1 class="theme-b">List - {{ SITE_NAME }}</h1>
+  <nav class="current">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li>List</li>
+    </ul>
+  </nav>
+</header>
+{% endblock %}
+
+{% block main %}
+<ul class="keywords">
+  <li class="theme-b">検索ワード:</li>
+  {% for keyword in keywords  %}
+  <li><a href="/word/{{ keyword.path|urlquote }}/">{{ keyword.word }}</a></li>
+  {% endfor %}
+  {% if url_query %}
+  <li class="more"><a href="/list{{ url_query }}">More..</a></li>
+  {% endif %}
+</ul>
+{% endblock %}
+
+{% block footer %}
+<footer class="theme-b">List - {{ SITE_NAME }}</footer>
+{% endblock %}

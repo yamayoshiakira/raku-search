@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ SITE_NAME }}</title>
+<meta name="description" content="{{ SITE_DESC }}">
+{% endblock %}
+
+{% block header %}
+<header>
+  <h1 class="theme-b">{{ SITE_NAME }}</h1>
+  <nav class="current">
+    <ul>
+      <li>Home</li>
+      <li>{{ SITE_DESC }}</li>
+    </ul>
+  </nav>
+  <form class="search-box" method="get" action="/search">
+  <input type="search" placeholder="search" name="q" value="">
+  </form>
+</header>
+{% endblock %}
+
+{% block main %}
+<ul class="keywords">
+  <li class="theme-b">検索ワード:</li>
+  {% for keyword in keywords  %}
+  <li><a href="/word/{{ keyword.path|urlquote }}/">{{ keyword.word }}</a></li>
+  {% endfor %}
+  {% if url_query %}
+  <li class="more"><a href="/list{{ url_query }}">More..</a></li>
+  {% endif %}
+</ul>
+{% endblock %}
+
+{% block footer %}
+<footer class="theme-b">{{ SITE_NAME }}</footer>
+{% endblock %}

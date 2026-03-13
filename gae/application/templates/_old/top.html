@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block body %}
+Home | Login Test
+<hr>
+
+{% if role.login %}{{ role.email }}{% else %}<a href="/login">Login</a>{% endif %}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block head %}
+<title>{{ op }}</title>
+{% endblock %}
+
+{% block body %}
+<a href="/">Home</a> | {{ op }}
+<hr>
+<a href="/article/{{ target.key.id }}">{{ target.subject }}</a>
+<hr>
+<form method="post" action="/article/post?{{ qs|safe }}">
+{{ form.hidden_tag() }}
+<dl>
+{{ render_field(form.subject) }}
+{{ render_field(form.message) }}
+{{ render_field(form.tags) }}
+{{ render_field(form.name) }}
+{{ render_field(form.email) }}
+</dl>
+<input type="submit">
+<p>{{ form.post.label }}: {{ form.post }}</p>
+</form>
+<hr>
+{{ role.email }}
+{% endblock %}

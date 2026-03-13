@@ -1,0 +1,11 @@
+# raku-tabi cron.yaml
+
+cron:
+
+- description: "dayly job"
+  url: /cron_day
+  schedule: every day 09:00
+
+- description: "hours job"
+  url: /cron_hour
+  schedule: every 1 hours

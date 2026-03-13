@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for keyword in keywords %}<url><loc>https://{{ SITE_URL }}/word/{{ keyword.path|urlencode }}/</loc></url>
+{% endfor %}</urlset>

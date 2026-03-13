@@ -1,0 +1,5 @@
+Flask
+google-cloud-datastore
+google-cloud-secret-manager
+google-cloud-tasks
+requests

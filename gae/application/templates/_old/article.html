@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block head %}
+<title>{{ article.subject }}</title>
+{% endblock %}
+
+{% block body %}
+<h1>{{ article.subject }}</h1>
+<nav class="main">
+<ul>
+<li><a href="/">Home</a></li>
+<li>{% if up %}<a href="/article/{{ up }}">Up</a>{% else %}UP{% endif %}</li>
+<li>{% if prev %}<a href="/article/{{ prev }}">Prev</a>{% else %}Prev{% endif %}</li>
+<li>{% if next %}<a href="/article/{{ next }}">Next</a>{% else %}Next{% endif %}</li>
+{% if role.login %}
+  {% if (role.author or role.owner or role.admin) and article.mode == 0%}
+<li><a href="/article/mode?close={{ article.key.id }}">Close</a></li>
+  {% elif (role.author and article.mode == 1)
+       or (role.owner and article.mode == 2)
+       or role.admin %}
+<li><a href="/article/mode?open={{ article.key.id }}">Open</a></li>
+  {% endif %}
+  {% if role.author and article.mode == 0 %}
+<li><a href="/article/post?id={{ article.key.id }}">Edit</a></li>
+  {% endif %}
+  {% if role.author or article.post %}
+<li><a href="/article/post?up={{ article.key.id }}">Post</a><li>
+  {% endif %}
+{% else %}
+<li><a href="/oauth2authorize">Login</a><li>
+{% endif %}
+</ul>
+</nav>
+<hr>
+{% if article.tags %}
+<nav class="tag">
+<ul>
+  {% for tag in article.tags %}
+<li><a href="/list?tags={{ tag|urlquote }}">{{ tag }}</a><li>
+  {% endfor%}
+</ul>
+</nav>
+{% endif %}
+{{ article.message_html|safe }}
+<span class="utc">{{ article.created}}</span> {{ author.name }}
+<hr>
+{% if role.author or article.post %}
+<a href="/article/post?up={{ article.key.id }}">Post</a>
+{% endif %}
+<hr>
+{% if articles %}
+<ul class="articles">
+  {% for article in articles %}
+<li><a class="expand" href="/article/{{ article.key.id }}"></a>
+<h4><a href="/article/{{ article.key.id }}">{{ article.subject }}</a></h4>
+<div class="flex">
+{% if article.img %}<img class="box1" src="https://thumbnail.image.rakuten.co.jp/@0_mall/lccosme/cabinet/photo/product/86309_0c.jpg?_ex=100x100">{% endif %}
+<div class="box2">
+<p>{{ article.message_text[:100] }}</p>
+<span class="utc">{{ article.created }}</span>
+</div><!-- end box2 -->
+</div><!-- end flex -->
+</li>
+<hr>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

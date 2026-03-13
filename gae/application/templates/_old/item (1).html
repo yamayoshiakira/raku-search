@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ SITE_NAME }}</title>
+{% endblock %}
+
+{% block main %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Product",
+  "name": "{{ item.short_name }}",
+  "description": "{{ item.description }}",
+  "offers": {
+    "@type": "Offer",
+    "availability": "http://schema.org/InStock",
+    "price": "{{ item.price }}",
+    "priceCurrency": "JPY",
+    "seller": "{{ item.shop }} / {{ item.supplier }}"
+  }{% if item.review > 0 %},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ item.rating }}",
+    "reviewCount": "{{ item.review }}"
+  }{% endif %}
+}
+</script>
+
+
+<div data-role="page" id="item" data-theme="a">
+<div data-role="header">
+<h1>{{ item.short_name }} - {{ SITE_NAME }}</h1>
+<a href="/" class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-notext ui-corner-all">Home</a>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+<a href="/">Home</a> | {{ item.name }}
+<hr />
+<div itemscope itemtype="http://schema.org/Product">
+<img itemprop="image" src="{{ item.img }}">
+<a href="{{ item.url }}" target="_blank"><h3 itemprop="name">{{ item.short_name }}</h3></a>
+{% autoescape off %}
+<span itemprop="description">{{ item.caption[:100] }}</span>
+{% if item.caption[100:] %}{{ item.caption[100:] }}{% endif %}
+{% endautoescape %}
+<p>
+<span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+ <meta itemprop="priceCurrency" content="JPY" />
+ <span itemprop="price" content="{{ item.price }}" class="red">{{ item.price|intcomma }}円</span>
+ <span itemprop="seller"> {% if item.shop %}{{ item.shop }}{% endif %}/ {{ item.supplier }}</span>
+</span><!-- /Offer -->
+{% if item.review > 0 %}<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+<span itemprop="ratingValue" class="blue">{{ item.rating }}</span> (<span itemprop="reviewCount" class="blue">{{ item.review|intcomma }}</span>)
+</span>{% endif %}
+</p>
+</div><!-- /Product -->
+<p><a href="{{ item.url }}" target="_blank" data-role="button" data-icon="check" data-theme="b">この商品を {{ item.supplier }} で購入</a></p>
+{% if item.links %}<div data-role="collapsible">
+<h4>関連ワード:</h4>
+<ul data-role="listview" id="link_list">
+{% for link in item.links %}<li><a href="/word/{{ link.path|urlquote }}/">{{ link.word }}</a></li>
+{% endfor %}</ul>
+</div><!-- /collapsible -->{% endif %}
+
+</div><!-- /main -->
+<div data-role="footer">
+<h5>{{ item.short_name }} - {{ SITE_NAME }}</h5>
+</div><!-- /footer -->
+</div><!-- /page -->
+
+<hr>
+
+{% endblock %}
