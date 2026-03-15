@@ -1,4 +1,4 @@
-# raku-tabi application/__init__.py
+# raku-search application/__init__.py
 
 import urllib
 

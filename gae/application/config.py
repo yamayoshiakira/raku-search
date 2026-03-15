@@ -1,7 +1,13 @@
 # raku-search application/config.py
 
+import google.auth
+
+from google.cloud import secretmanager
+
 
 class Config(object):
+
+    _, PID = google.auth.default()
 
     SECRET_KEY = "7d441f27d431f28567d451d2b5176b"
 

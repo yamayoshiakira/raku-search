@@ -19,6 +19,10 @@ LIMIT = 50
 @app.route('/test')
 def test():
 
+    pid = app.config.get('PID')
+    print(pid)
+
+    '''
     RakuAppId = "0f53734a-e88d-427a-a59c-d8a6ad0e3954"
     RakuSAK = "pk_w7zMTbmJexNTp2NN0MKhuWSehuM8j2ClhcMz73eDR7t"
     RakuAffId = ""
@@ -74,7 +78,7 @@ def test():
 
     RakuAppId2 = get_secret("RakuAppId")
     print("b>>", RakuAppId2)
-
+    '''
     return "ok22"
 
 
